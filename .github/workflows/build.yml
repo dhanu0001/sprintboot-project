@@ -32,6 +32,6 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build and analyze
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: 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  # Needed to get PR information, if any
+          SONAR_TOKEN: dc599752bb1ee75d7477243993d9a593b9d92d10
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=dhanu0001_sprintboot-project
