@@ -23,7 +23,7 @@ jobs:
         run: mvn test
         
       - name: Analyze with Sonarcloud
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=dhanu0001_sprintboot-project -Dsonar.organization=dhanu0001 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=a9632b495b8b1086a4e2857e4257e1e1d454f045
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=dhanu0001_sprintboot-project -Dsonar.organization=dhanu0001 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=a9632b495b8b1086a4e2857e4257e1e1d454f045 -Dsonar.qualitygate.wait=true
 #         with:
 #           projectBaseDir: /home/runner/work/springboot-java-project/springboot-java-project/target/site/jacoco/jacoco.csv
 #           sonarCloudScan: true
