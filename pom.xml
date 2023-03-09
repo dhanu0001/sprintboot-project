@@ -17,9 +17,9 @@
 	    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.login>2be6c5208e40a0d1a5b570befc7c8884eb6ab1b4</sonar.login>
-		<sonar.projectKey>saks-org_sonar-scan</sonar.projectKey>
-		<sonar.organization>saks-org</sonar.organization>
+		<sonar.login>a9632b495b8b1086a4e2857e4257e1e1d454f045</sonar.login>
+		<sonar.projectKey>dhanu0001_sprintboot-project</sonar.projectKey>
+		<sonar.organization>dhanu0001</sonar.organization>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
