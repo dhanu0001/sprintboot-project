@@ -1,37 +1,61 @@
-name: SonarCloud
+name: SonarCloud analysis
 on:
   push:
     branches:
       - main
   pull_request:
-    types: [opened, synchronize, reopened]
+    branches: [ "main"] 
+    types: [opened, synchronize, reopened] 
 jobs:
-  build:
-    name: Build and analyze
+  sonarcloud: 
+    name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: 11
-          distribution: 'zulu' # Alternative distribution options are available.
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
+           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Build with maven
+        run: mvn clean package 
+          
+      - name: Test with maven
+        run: mvn test
+        
+      - name: Analyze with Sonarcloud
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=dhanu0001_sprintboot-project -Dsonar.organization=dhanu0001 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=a9632b495b8b1086a4e2857e4257e1e1d454f045 -Dsonar.qualitygate.wait=true
+#         with:
+#           projectBaseDir: /home/runner/work/springboot-java-project/springboot-java-project/target/site/jacoco/jacoco.csv
+#           sonarCloudScan: true
         env:
-          GITHUB_TOKEN: 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  # Needed to get PR information, if any
-          SONAR_TOKEN: dc599752bb1ee75d7477243993d9a593b9d92d10
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=dhanu0001_sprintboot-project
+          GITHUB_TOKEN: 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  # Needed to get PR information, if any
+          SONAR_PROJECTKEY: dhanu0001_sprintboot-project
+          SONAR_ORGANIZATION: dhanu0001
+          SONAR_TOKEN: a9632b495b8b1086a4e2857e4257e1e1d454f045 
+          
+#       - name: Build and analyze
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+#         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          
+      # Check the Quality Gate status.
+#       - name: SonarQube Quality Gate check
+#         id: sonarqube-quality-gate-check
+#         uses: sonarsource/sonarqube-quality-gate-action@master
+#         with:
+#            scanMetadataReportFile: target/sonar/report-task.txt
+#            wait-for-quality-gate: 'true'
+#            quality-gate-wait-timeout: 2m
+#         Force to fail step after specific time.
+#         timeout-minutes: 5
+#         env:
+#           GITHUB_TOKEN: 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  # Needed to get PR information, if any
+#           SONAR_PROJECTKEY: saks-code-repo
+#           SONAR_ORGANIZATION: dhanu0001
+#           SONAR_TOKEN: 97e22ce748b6b6855d1f1fcd0e3ca2323abd0219
+        
+        
+  
+        
